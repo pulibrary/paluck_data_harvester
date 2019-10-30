@@ -14,9 +14,21 @@ $ export ELSEVIER_API_KEY=<my key>
 
 You may want to put this in your `~/.bash_profile` to avoid having to set in in each terminal session.
 
-### Installation and Dependencies
+### Installation for Running Queries
 
-N.B., on OS 10.X you'll need xcode: `$ xcode-select --install`
+Use Python 3.7 or greater.
+
+If you do not want to develop the code and just need to run queries, install the dependencies with:
+
+```
+$ pip install -r requirements.txt
+```
+
+Then have a look at `main.py`.
+
+### Installation for Development
+
+NB: on OS 10.X you'll need xcode: `$ xcode-select --install`
 
 [`pipenv`](https://github.com/pypa/pipenv#installation) is used for development/debugging. After cloning, do:
 ```
@@ -37,6 +49,10 @@ To remove a dependency:
 ```
 $ pipenv uninstall <my_dep>
 ```
+To keep `requirements.txt` in sync (run this after any dependency changes), do:
+```
+$ pipenv lock -r > requirements.txt
+```
 To update all dependencies:
 ```
 $ pipenv update --outdated
@@ -44,10 +60,6 @@ $ pipenv update --outdated
 Keep your environment tidy by occasionally running:
 ```
 $ pipenv clean
-```
-If you need a `requirements.txt`, generate and keep it up to date with:
-```
-$ pipenv lock -r > requirements.txt
 ```
 
 Call `pipenv --help` or `pipenv <subcommand> --help` or see [the docs](https://github.com/pypa/pipenv#-usage) for details.
@@ -65,4 +77,4 @@ Follow [Google's Style Guide](http://google.github.io/styleguide/pyguide.html#38
 
 BSD 3-Clause. See [LICENSE](LICENSE).
 
-Note well that the use of content provided by Elsevier is subject to [their terms](https://www.elsevier.com/legal/elsevier-website-terms-and-conditions), including the terms to which you agreed when generating your API key (and copied into the [`elsevier_api_terms`](elsevier_api_terms) directory of this repository for convenience.)
+Note well that the use of content provided by Elsevier is subject to [their terms](https://www.elsevier.com/legal/elsevier-website-terms-and-conditions), including the terms to which you agreed when generating your API key (and copied into the [`elsevier_api_terms`](elsevier_api_terms) directory of this repository for convenience).
