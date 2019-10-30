@@ -1,7 +1,7 @@
 # Article Metadata Harvesting for B.P.
 
 [![Python 3.7](https://img.shields.io/badge/python-3.7-yellow.svg)](https://img.shields.io/badge/python-3.7-yellow.svg)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-orange.svg)](LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 ## Getting Started
@@ -54,18 +54,15 @@ Call `pipenv --help` or `pipenv <subcommand> --help` or see [the docs](https://g
 
 ### Style
 
-When in doubt, run [Black](https://black.readthedocs.io/en/stable/index.html)
+When in doubt, run [Black](https://black.readthedocs.io/en/stable/index.html):
+```
+$ pipenv run black -t py37 -l 79 main.py api/
+```
 
-```
-$ pipenv run black -t py37 -l 79 .
-```
+Follow [Google's Style Guide](http://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) for docstrings.
 
 ## License
 
-### Elsevier
+BSD 3-Clause. See [LICENSE](LICENSE).
 
-Use of content provided by Elsevier is subject to [their terms](https://www.elsevier.com/legal/elsevier-website-terms-and-conditions), including the terms to which you agreed when generating your API key (and copied into the [`elsevier_api_terms`](elsevier_api_terms) directory of this repository for convenience.)
-
-### Code
-
-MIT. See [LICENSE](LICENSE)
+Note well that the use of content provided by Elsevier is subject to [their terms](https://www.elsevier.com/legal/elsevier-website-terms-and-conditions), including the terms to which you agreed when generating your API key (and copied into the [`elsevier_api_terms`](elsevier_api_terms) directory of this repository for convenience.)

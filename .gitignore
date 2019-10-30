@@ -1,1 +1,6 @@
 .DS_Store
+logs/*
+!logs/.keep
+data/*
+!data/.keep
+dump.json

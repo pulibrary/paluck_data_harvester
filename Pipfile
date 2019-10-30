@@ -5,9 +5,13 @@ verify_ssl = true
 
 [dev-packages]
 black = "*"
+regex = "*"
 
 [packages]
+elsapy = "*"
+pandas = "*"
 requests = "*"
+regex = "*"
 
 [requires]
 python_version = "3.7"
