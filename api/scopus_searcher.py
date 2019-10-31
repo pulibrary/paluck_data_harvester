@@ -1,3 +1,4 @@
+from csv import DictWriter
 from elsapy.elsclient import ElsClient
 from elsapy.elssearch import ElsSearch
 from os import environ
@@ -10,11 +11,21 @@ from re import split
 # Some basic examples here:
 #   https://github.com/ElsevierDev/elsapy/blob/master/exampleProg.py
 #
-# TODO: Confirm that we don't have to worry about paging. SCOPUS has a cursor
-#   https://github.com/ElsevierDev/elsapy/blob/master/elsapy/elssearch.py#L98-L104
-#   but it could still be a memory headache in which case we might want to
-#   patch ElsSearch#execute to allow us to yield each page.
-#
+
+DEFAULT_CSV_FIELDS = (
+    "dc:creator",
+    "dc:title",
+    "prism:coverDate",
+    "prism:doi",
+    "prism:issn",
+    "prism:issueIdentifier",
+    "prism:publicationName",
+    "prism:url",
+    "prism:volume",
+    "prism:aggregationType",
+    "subtypeDescription",
+    "openaccessFlag",
+)
 
 
 class ScopusSearcher:
@@ -60,7 +71,7 @@ class ScopusSearcher:
         """
         return " ".join(split("\s+", s))
 
-    def search(self, query_name="query.txt"):
+    def search(self, query_name):
         """Do a search.
 
         Args:
@@ -79,21 +90,27 @@ class ScopusSearcher:
         search.execute(client)
         return search.results
 
-    def dump_results(self, results, file_path):
+    def dump_results(self, results, file_name, fieldnames=DEFAULT_CSV_FIELDS):
         """Dumps results to a CSV file
 
         Args:
             results (list): the results of call to #search
-            file_path (str): the path to the file where the results should be
-                written. _NOTE_ that the diretory must exist, and that the file
+            file_name (str): the name of the file to which the results should
+                be written. The file will be in ./data. _NOTE_ that the file
                 will be overwritten.
+            fieldnames (list): A list of fields to write to the file.
+
+        Returns:
+            None
         """
-        # write to self.data_dir
-        # keys: '@_fa', 'link', 'prism:url', 'dc:identifier', 'eid', 'dc:title',
-        # 'dc:creator', 'prism:publicationName', 'prism:issn', 'prism:volume',
-        # 'prism:issueIdentifier', 'prism:pageRange', 'prism:coverDate',
-        # 'prism:coverDisplayDate', 'prism:doi', 'citedby-count',
-        # 'affiliation', 'prism:aggregationType', 'subtype',
-        # 'subtypeDescription', 'article-number', 'source-id', 'openaccess',
-        # 'openaccessFlag'
-        pass
+        file_path = join(self.data_dir, file_name)
+        with open(file_path, "w") as csvf:
+            args = {
+                "extrasaction": "ignore",
+                "restval": "none",
+                "fieldnames": fieldnames,
+                "dialect": "unix",
+            }
+            writer = DictWriter(csvf, **args)
+            writer.writeheader()
+            [writer.writerow(r) for r in results]
